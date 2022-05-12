@@ -1,4 +1,5 @@
 package mat.pesci.patternproject;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class LineConstructor {
         this.points = allPoints;
     }
 
-    // This method return a List containing all the line (passing through at least N points)
+    // This method returns a List containing all the line (passing through at least N points)
     public ArrayList<Line> getLines(int n) {
 
         // Create 2 List(s) for the horizontal and vertical lines, in order to avoid
         // possible artifact between the last vertical lines and the first horizontal one
-        ArrayList<Line> lineHorizontal = new ArrayList<>();
-        ArrayList<Line> lineVertical = new ArrayList<>();
+        ArrayList<Line> linesHorizontal = new ArrayList<>();
+        ArrayList<Line> linesVertical = new ArrayList<>();
 
         // A line has at least 1 point, if n<1 throw an exception
         if (n < 1) {
@@ -39,7 +40,7 @@ public class LineConstructor {
             if (points.get(i).getX() == points.get(i - 1).getX() &&
                     (points.get(i).getY() - points.get(i - 1).getY()) == 1) {
                 // Add a line to the List, constructed from the Points
-                lineVertical.add(new Line(points.get(i - 1), points.get(i)));
+                linesVertical.add(new Line(points.get(i - 1), points.get(i)));
             }
         }
 
@@ -48,15 +49,15 @@ public class LineConstructor {
         points.sort(Comparator.comparingInt(Point::getY));
         // Confront each pair of subsequent points, to find horizontal lines
         for (int i = 1; i < points.size(); i++) { //
-            //if points are on the same Y, and they are neighbours (distance=1)
+            // If points are on the same Y, and they are neighbours (distance=1)
             if (points.get(i).getY() == points.get(i - 1).getY() &&
                     (points.get(i).getX() - points.get(i - 1).getX()) == 1) {
-                lineHorizontal.add(new Line(points.get(i - 1), points.get(i)));
+                linesHorizontal.add(new Line(points.get(i - 1), points.get(i)));
             }
         }
         // Merges smaller lines until forming each possible line,
         // return only lines with at least N points
-        return bottomUpMerge(lineHorizontal, lineVertical, n);
+        return bottomUpMerge(linesHorizontal, linesVertical, n);
 
     }
 
@@ -69,14 +70,14 @@ public class LineConstructor {
         int complexLevel = 2; //2-points lines are already formed, the complexity start at this value
 
         // List to store the forming complex lines
-        final ArrayList<Line> supportLines = new ArrayList<>();
+        final ArrayList<Line> completeLines = new ArrayList<>();
 
         // The basic lines are saved before operating on these Lists
         for (Line ln : lineVertical) {
-            supportLines.add(new Line(ln.getFirst(), ln.getLast()));
+            completeLines.add(new Line(ln.getFirst(), ln.getLast()));
         }
         for (Line ln : lineHorizontal) {
-            supportLines.add(new Line(ln.getFirst(), ln.getLast()));
+            completeLines.add(new Line(ln.getFirst(), ln.getLast()));
         }
 
         // Continue until there are no more vertical line to merge
@@ -101,7 +102,7 @@ public class LineConstructor {
 
             // Save in the storage List the increasing complex lines
             for (Line ln : lineVertical) {
-                supportLines.add(new Line(ln.getPoints()));
+                completeLines.add(new Line(ln.getPoints()));
             }
         }
 
@@ -121,26 +122,26 @@ public class LineConstructor {
             complexLevel++;
 
             for (Line ln : lineHorizontal) {
-                supportLines.add(new Line(ln.getPoints()));
+                completeLines.add(new Line(ln.getPoints()));
             }
         }
 
         // Return the List removing each Line with less than N points,
         // if it's empty throw a custom "Not Found" error
         if (n > 1) {
-            supportLines.removeIf(u -> u.getPoints().size() < n);
-            if (supportLines.isEmpty()){
+            completeLines.removeIf(u -> u.getPoints().size() < n);
+            if (completeLines.isEmpty()){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Try lower N or insert more points");
             }
-            return supportLines;
+            return completeLines;
         }
 
         // If n=1 return the complete list (if not empty)
         // otherwise throw a custom "Not Found" error
-        if (supportLines.isEmpty()){
+        if (completeLines.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Try to POST two neighbour points");
         }
-        return supportLines;
+        return completeLines;
     }
 }
 
