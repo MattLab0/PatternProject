@@ -2,8 +2,10 @@ package mat.pesci.patternproject;
 
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
+// Service methods to operate on the points List
 @Service
 public class SpaceService {
 
@@ -12,6 +14,8 @@ public class SpaceService {
 
     // Returns all the Points (to be shown)
     public List<Point> findAllPoints() {
+        points.sort(Comparator.comparingInt(Point::getY));
+        points.sort(Comparator.comparingInt(Point::getX));
         return points;
     }
 

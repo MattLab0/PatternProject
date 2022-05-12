@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 
+// Controller for the HTTP methods
 @RestController
 public class SpaceController {
 

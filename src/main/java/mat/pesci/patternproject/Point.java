@@ -1,5 +1,7 @@
 package mat.pesci.patternproject;
 
+// The Point class holds a couple of coordinates (x,y),
+// the coordinates can be obtained via public methods
 public class Point {
 
     // Coordinates of the point

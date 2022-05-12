@@ -1,17 +1,19 @@
 package mat.pesci.patternproject;
 
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
-
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
-//to avoid "first" and "last" to be shown as properties
+
+// To avoid "first" and "last" to be shown as properties
 @JsonIncludeProperties({ "points" })
+// The Line class holds a List of points,
+// it can be instantiated and manipulated via public methods
 public class Line {
-    //list for the points
+
+    // List for the points
     private ArrayList<Point> points;
 
-    //constructor of basic Point list
+    // Constructor of basic Point List (from 2 points)
     public Line(Point first, Point  last) {
         points = new ArrayList<>();
         points.add(first);
@@ -19,18 +21,19 @@ public class Line {
 
     }
 
-    public Line(ArrayList<Point> points2) {
+    // Constructor of complex Point List (from List of points)
+    public Line(ArrayList<Point> pointsArrayList) {
         points = new ArrayList<>();
-        points.addAll(points2);
+        points.addAll(pointsArrayList);
     }
 
-
-    //method to add a Point to the line List
+    // Method to add a Point to the Line List
     public void addPoint(Point point) {
         this.points.add(point);
     }
 
-    //getters and setters
+    // Getters and setters
+
     public ArrayList<Point> getPoints() {
         return points;
     }
@@ -39,7 +42,7 @@ public class Line {
         this.points = points;
     }
 
-    //getters for the first and last Point in a Line
+    // Getters for the first and last Point in a Line
 
     public Point getFirst() {
         return points.get(0);
