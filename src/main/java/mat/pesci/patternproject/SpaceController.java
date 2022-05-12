@@ -22,7 +22,9 @@ public class SpaceController {
     // GET method at /space/n returns all the lines formed by at least N points
     @GetMapping(value = "/lines/{n}")
     public ArrayList<Line> getLines(@PathVariable int n) {
-        return null;
+        LineConstructor lineConstructor =
+                new LineConstructor((ArrayList<Point>) this.spaceService.findAllPoints());
+        return lineConstructor.getLines(n);
     }
 
     // If it isn't already present, POST a new point with the syntax /point/x-y

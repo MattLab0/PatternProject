@@ -1,7 +1,6 @@
 package mat.pesci.patternproject;
 
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +8,7 @@ import java.util.List;
 public class SpaceService {
 
     // List for the points
-    private static List<Point> points = new ArrayList<>();
+    private List<Point> points = new ArrayList<>();
 
     // Returns all the Points (to be shown)
     public List<Point> findAllPoints() {

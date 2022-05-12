@@ -2,17 +2,17 @@ package mat.pesci.patternproject;
 
 public class Point {
 
-    // coordinates of the point
+    // Coordinates of the point
     private int x;
     private int y;
 
-    //constructor
+    // Constructor
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    //getter and setter
+    // Getter and setter
 
     public int getX() {
         return x;
