@@ -1,10 +1,10 @@
-#Pattern Project
+# Pattern Project
 
 This REST application allows the caller to manage points and get lines.   
 
-###Needs JDK 17 installed.
+### Needs JDK 17 installed.
 
-##IntelliJ
+## IntelliJ
 To run with IntelliJ:
 
 * Open IntelliJ IDEA and select `File > Open...`
@@ -13,18 +13,18 @@ To run with IntelliJ:
 
 * Go to PatternProjectMain inside and run it.
 
-##Command Line
-###Run steps
+## Command Line
+### Run steps
 * cd into the project's root directory.
 
 * Run `./mvnw spring-boot:run` on Linux/Mac 
 or `.\mvnw.cmd spring-boot:run` on Windows
 
-###Build steps
+### Build steps
 * On Linux/Mac: `./mvnw clean package spring-boot:repackage`
 
 * On Windows: `.\mvnw.cmd clean package spring-boot:repackage`
 
-##Known issues
+## Known issues
 
 None at the present
